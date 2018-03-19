@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `redirect`.
  */
-class m180315_184259_create_redirect_table extends Migration
+class m180316_063454_create_redirect_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -18,10 +18,12 @@ class m180315_184259_create_redirect_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('redirect', [
-            'id' => $this->primaryKey()->unsigned(),
-            'from' => $this->char(255)->unique(),
+        $this->createTable('{{%redirect}}', [
+            'id' => $this->primaryKey(),
+            'from' => $this->char(255)->notNull()->unique(),
             'to' => $this->char(255),
+            'visited' => $this->integer(11)->notNull()->defaultValue(1)->unsigned(),
+            'status_code' => $this->integer(3)->notNull()->defaultValue(301)->unsigned(),
             'created_at' => $this->integer(11)->unsigned(),
             'updated_at' => $this->integer(11)->unsigned()
         ], $tableOptions);
@@ -32,6 +34,6 @@ class m180315_184259_create_redirect_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('redirect');
+        $this->dropTable('{{%redirect}}');
     }
 }

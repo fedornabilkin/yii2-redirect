@@ -25,5 +25,34 @@ Migrations
 -----
 `php yii migrate --migrationPath=@fedornabilkin/redirect/migrations`
 
+Settings
+-----
+add backend config
+```php
+'modules' => [
+    'redirect' => [
+        'class' => fedornabilkin\redirect\Module::class,
+    ],
+],
+```
+
 Usage
 -----
+
+Add controller actions
+```php
+public function actions()
+{
+    return [
+        'error' => [
+            'class' => \fedornabilkin\redirect\actions\ErrorAction::class,
+        ],
+    ];
+}
+```
+
+Manager path
+-----
+You must restrict access to the controller!
+
+`/redirect/manager`
