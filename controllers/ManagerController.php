@@ -2,12 +2,12 @@
 
 namespace fedornabilkin\redirect\controllers;
 
-use Yii;
 use fedornabilkin\redirect\models\Redirect;
 use fedornabilkin\redirect\models\RedirectSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ManagerController implements the CRUD actions for Redirect model.
@@ -24,6 +24,7 @@ class ManagerController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                    'delete-empty' => ['POST'],
                 ],
             ],
         ];
@@ -105,6 +106,22 @@ class ManagerController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Remove empty redirects, redirected to the 'index' page.
+     * Generate alert messages.
+     * @return \yii\web\Response
+     */
+    public function actionDeleteEmpty()
+    {
+        if(Redirect::deleteAll(['to' => ''])){
+            \Yii::$app->session->setFlash('success', \Yii::t('redirect', 'Record has been successfully removed.'));
+        }else{
+            \Yii::$app->session->setFlash('danger', \Yii::t('redirect', 'Delete failed!'));
+        }
 
         return $this->redirect(['index']);
     }

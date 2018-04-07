@@ -76,4 +76,12 @@ class Redirect extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('redirect', 'Updated At'),
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVisits()
+    {
+        return $this->hasMany(RedirectVisits::class, ['redirect' => 'id']);
+    }
 }

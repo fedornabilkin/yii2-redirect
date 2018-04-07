@@ -10,13 +10,15 @@ use yii\data\ActiveDataProvider;
  */
 class RedirectSearch extends Redirect
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['id'], 'integer'],
+//            [['created_at', 'updated_at'], 'safe'],
             [['from', 'to'], 'safe'],
         ];
     }
@@ -45,9 +47,14 @@ class RedirectSearch extends Redirect
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['created_at' => SORT_DESC]
+            ]
         ]);
 
         $this->load($params);
+//        $this->created_at = $this->created_at ? strtotime($this->created_at) : $this->created_at;
+//        $this->updated_at = $this->updated_at ? strtotime($this->updated_at) : $this->updated_at;
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -56,16 +63,11 @@ class RedirectSearch extends Redirect
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-//            'created_at' => $this->created_at,
-//            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'from', $this->from])
+        $query->andFilterWhere(['id' => $this->id])
+//            ->andFilterWhere(['created_at' => $this->created_at])
+//            ->andFilterWhere(['updated_at' => $this->updated_at])
+            ->andFilterWhere(['like', 'from', $this->from])
             ->andFilterWhere(['like', 'to', $this->to]);
-
-        $query->orderBy(['created_at' => SORT_DESC]);
 
         return $dataProvider;
     }

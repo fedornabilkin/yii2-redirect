@@ -17,6 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('redirect', 'Create redirect'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('redirect', 'Remove empty redirects'), ['delete-empty'], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('redirect', 'All records that are not redirected anywhere along with statistics of visits will be deleted. Remove?'),
+                'method' => 'post',
+            ],
+        ]) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,9 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+            ],
 
-            'visited',
+            [
+                'attribute' => 'visited',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Html::a($data->visited, ['/redirect/manager/view', 'id' => $data->id]);
+                }
+            ],
             'status_code',
             [
                 'attribute' => 'from',
@@ -44,11 +60,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'created_at',
-                'format' => ['date', 'php:H:m d.m.y']
+                'format' => ['date', 'php:H:i d.m.y']
             ],
             [
                 'attribute' => 'updated_at',
-                'format' => ['date', 'php:H:m d.m.y']
+                'format' => ['date', 'php:H:i d.m.y']
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{delete}',
             ],
         ],
     ]); ?>
