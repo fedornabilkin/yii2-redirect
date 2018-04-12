@@ -32,6 +32,7 @@ add backend config
 'modules' => [
     'redirect' => [
         'class' => fedornabilkin\redirect\Module::class,
+        'frontendHost' => 'http://site.ru', // Go to page from admin panel
     ],
 ],
 ```

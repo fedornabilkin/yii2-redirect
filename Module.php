@@ -13,6 +13,7 @@ use yii\i18n\PhpMessageSource;
 
 class Module extends \yii\base\Module {
 
+    public $frontendHost;
     public $controllerNamespace = 'fedornabilkin\redirect\controllers';
 
     public function init() {

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel fedornabilkin\redirect\models\RedirectSearch */
@@ -9,6 +10,8 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('redirect', 'Redirects');
 $this->params['breadcrumbs'][] = $this->title;
+
+$frontendHost = Yii::$app->controller->module->frontendHost;
 ?>
 <div class="redirect-index">
 
@@ -47,15 +50,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'from',
                 'format' => 'raw',
-                'value' => function($data){
-                    return Html::a($data->from, $data->from, ['target' => '_blank']);
+                'value' => function($data) use($frontendHost){
+                    $url = Url::to($frontendHost . $data->from, true);
+                    return Html::a($data->from, $url, ['target' => '_blank']);
                 }
             ],
             [
                 'attribute' => 'to',
                 'format' => 'raw',
-                'value' => function($data){
-                    return Html::a($data->to, $data->to, ['target' => '_blank']);
+                'value' => function($data) use($frontendHost){
+                    $url = Url::to($frontendHost . $data->to, true);
+                    return Html::a($data->to, $url, ['target' => '_blank']);
                 }
             ],
             [
