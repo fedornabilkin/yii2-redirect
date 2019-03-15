@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property string $from
  * @property string $to
+ * @property string $status_code
  * @property int $created_at
  * @property int $updated_at
  */
