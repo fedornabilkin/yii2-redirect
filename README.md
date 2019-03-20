@@ -61,3 +61,5 @@ Manager path
 You must restrict access to the controller!
 
 `/redirect/manager`
+
+![yii2-redirect](https://user-images.githubusercontent.com/10771156/54666000-a958ec00-4af9-11e9-9b8b-a0ca6613ff69.PNG)
