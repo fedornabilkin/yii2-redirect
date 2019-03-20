@@ -1,3 +1,7 @@
+[![Latest Stable Version](https://img.shields.io/packagist/v/fedornabilkin/yii2-redirect.svg)](https://packagist.org/packages/fedornabilkin/yii2-redirect)
+[![Downloads](https://img.shields.io/packagist/dt/fedornabilkin/yii2-redirect.svg)](https://packagist.org/packages/fedornabilkin/yii2-redirect)  
+
+
 Redirect manager, not found finder
 ==================================
 Find and save page not found, add new path.
